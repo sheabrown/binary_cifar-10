@@ -11,6 +11,7 @@ from binary_classifier import train, predict
 import numpy as np
 from load_binary_images import loadTrainingSet, loadValidationSet, loadTestSet, getNames, rgbImage
 import sys
+plt.rcParams['figure.figsize'] = (7,7) # Make the figures a bit bigger
 
 # Get and print the names of the original 10 classes
 # ---------------------------------------------------
