@@ -16,12 +16,15 @@ plt.rcParams['figure.figsize'] = (7,7) # Make the figures a bit bigger
 # Get and print the names of the original 10 classes
 # ---------------------------------------------------
 names=getNames()
+print 'The names of the original classes are'
 print names
 
 # Get the data, shuffled and split between train and validation sets
 # -------------------------------------------------------------------
 X_train, y_train = loadTrainingSet()
 X_testo, y_test = loadValidationSet()
+print 'Your training set has ' + str(len(y_train)) + ' images'
+print 'Your validation set has ' + str(len(y_test)) + ' images'
 
 # Train the classifier on the training set. Here we are using a basic linear 
 # classifier with a L2 norm loss function (i.e., least squares error), batch
@@ -61,7 +64,6 @@ print('The rms of p() is ',np.sqrt(np.var(p)))
 # -------------------------------------------------------------------------
 y_test=y_test.reshape(len(y_test))
 index=y_test==1.0
-print('len index',len(index))
 cor=np.sum(guesses[index] == y_test[index])
 tot=len(y_test[index])
 print 'The estimator gave '+str(cor)+' animals the correct classification, out of '+str(tot)+' total.'  
@@ -83,6 +85,10 @@ print 'The false positive rate is '+str(100.0*(tot-cor)/tot)+'%'
 correct_indices = np.nonzero(guesses == y_test)[0]
 incorrect_indices = np.nonzero(guesses != y_test)[0]
 
+# Plot some the the images we got right, after we 
+# reshape them back into images (remember that they
+# had to be flattened into vectors of features 
+# --------------------------------------------------
 s=(20000,3,32,32)
 X_testo=X_testo.reshape(s)
 X_testo=np.moveaxis(X_testo,1,3)
@@ -92,6 +98,8 @@ for i, correct in enumerate(correct_indices[:9]):
     plt.imshow(X_testo[correct])
     plt.title("Predicted {}, Class {}".format(guesses[correct], y_test[correct]))
 
+# Do the same for a few that we got wrong!
+# --------------------------------------------------
 plt.figure()
 for i, incorrect in enumerate(incorrect_indices[:9]):
     plt.subplot(3,3,i+1)
